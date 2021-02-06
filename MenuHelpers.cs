@@ -14,8 +14,8 @@ namespace datingapp {
             newUser.Active = "True";
 
             // PersonInfo
+            newUser.PersonInfo = new PersonInfo();
             PersonInfo PersonInfo = newUser.PersonInfo;
-            PersonInfo = new PersonInfo();
             Console.WriteLine("Indtast Fornavn");
             PersonInfo.MyFirstName = Console.ReadLine();
             Console.WriteLine("Indtast Efternavn");
@@ -30,16 +30,16 @@ namespace datingapp {
             PersonInfo.MyGender = Console.ReadLine();
 
             // Table Addresses
+            newUser.Address = new Addresses();
             Addresses Address = newUser.Address;
-            Address = new Addresses();
             Console.WriteLine("Indtast by");
             Address.MyCity = Console.ReadLine(); 
             Console.WriteLine("Indtast postnummer");
             Address.MyZipCode = Console.ReadLine();
 
             // Table AttractionTable
+            newUser.AttractionTable = new AttractionTable();
             AttractionTable AttractionTable = newUser.AttractionTable;
-            AttractionTable = new AttractionTable();
             Console.WriteLine("Indtast fortrukne køn");
             AttractionTable.ILikeGender = Console.ReadLine();
             Console.WriteLine("Minimuns alder");

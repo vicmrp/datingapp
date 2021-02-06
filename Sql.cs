@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace datingapp
 {
-    static class Sql
+    public static class Sql
     {
         private static string ConnectionString = @"Data Source=BYG-A101-VICRE\MSSQLSERVER01;Initial Catalog=datingapp;Integrated Security=True";
         

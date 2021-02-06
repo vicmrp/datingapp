@@ -6,7 +6,7 @@ namespace datingapp
     {
         public static bool StartMenu()
         {
-            Console.Clear();
+            // Console.Clear();
             Console.WriteLine("StartMenu");
             Console.WriteLine("Choose an option:");
             Console.WriteLine("1) Login");
@@ -19,7 +19,8 @@ namespace datingapp
                 case "1":
                     // ListClass.TestList();
                     // LoginFomula();
-                    Sql.SqlConnectionOK();
+                    Console.WriteLine(Sql.SqlConnectionOK());
+                    Console.ReadLine();
                     return true;
                 case "2":
                     MenuHelpers.CreateAccount();
