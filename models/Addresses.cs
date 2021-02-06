@@ -1,10 +1,12 @@
+using System;
+
 namespace datingapp
 {
     public class Addresses
     {
-        public int ID {get;set;}
-        public string UserName {get;set;}
-        public string FirstName {get;set;}
-        public string LastName {get;set;}
+        public int AddressesID {get;set;}
+        public int UsersID {get;set;}
+        public string MyCity {get;set;}
+        public string MyZipCode {get;set;}
     }
 }

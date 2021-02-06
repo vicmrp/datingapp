@@ -4,18 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.SqlClient;
 
-// Sqlcs -> clsSqlcs
-
 namespace datingapp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            bool showMenu = true;
-            while (showMenu)
+            try
             {
-                showMenu = Menu.StartMenu();
+                bool showMenu = true;
+                while (showMenu)
+                {
+                    // Menuen Startmenu starter
+                    showMenu = Menu.StartMenu();
+                }
+            }
+            catch (System.Exception)
+            {                
+                throw;
             }
         }
     }

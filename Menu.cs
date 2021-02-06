@@ -17,36 +17,12 @@ namespace datingapp
             switch (Console.ReadLine())
             {
                 case "1":
-                    //LoginFomula();
+                    // ListClass.TestList();
+                    // LoginFomula();
+                    Sql.SqlConnectionOK();
                     return true;
                 case "2":
-
-                    // konverter data
-                    // int result = Int32.Parse(input);
-                    // int age = Int32.Parse(age_str);
-                    // int height = Int32.Parse(height_str);
-
-                    CreateAccount acc1 = new CreateAccount(
-                        "vicmrp3",
-                        "password",
-                        "True",
-                        "Victor",
-                        "Reipur",
-                        age,
-                        189,
-                        94,
-                        "Male",
-                        "Lyngby",
-                        "2800",
-                        "Female",
-                        22,
-                        26,
-                        160,
-                        189,
-                        50,
-                        80
-                    );
-                    acc1.MyInsert();
+                    MenuHelpers.CreateAccount();
                     return true;
                 case "3":
                     return false;
