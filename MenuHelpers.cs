@@ -56,7 +56,11 @@ namespace datingapp {
             AttractionTable.MaxWeight = Convert.ToInt32(Console.ReadLine());
 
 
-            Sql.insert(newUser);
+            Sql.Creteaccount (newUser);
         }
-    }
+        public static void DisableAccount(string accountName)
+        {
+            Sql.Equals.DisableAccount()
+        }
+    }  
 }
