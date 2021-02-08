@@ -2,6 +2,7 @@ using System;
 
 namespace datingapp {
     public static class MenuHelpers {
+        public static Users CurrentUser { get; set; }
         // Metode
         public static void CreateAccount()
         {
@@ -56,33 +57,27 @@ namespace datingapp {
             AttractionTable.MaxWeight = Convert.ToInt32(Console.ReadLine());
 
 
-            //Sql.CreateAccount (newUser);
+            Sql.CreateAccount (newUser);
         }
         public static void PrintCurrentUser()
         {
-            Console.WriteLine($"{CurrentUser.MyUsername}, {CurrentUser.MyPassword}");
+            Console.WriteLine($"{CurrentUser.MyUsername}, {CurrentUser.MyPassword}, {CurrentUser.PersonInfo.MyFirstName}");
         }
-        public static Users CurrentUser { get; set; }
         public static void Login()
         {
-            //Console.WriteLine("Udfyld Username.");
-            //var myUsername = Console.ReadLine();
-            //Console.WriteLine("Udfyld Password.");
-            //string myPassword = Console.ReadLine();
+            Console.WriteLine("Udfyld Username.");
+            var myUsername = Console.ReadLine();
+            Console.WriteLine("Udfyld Password.");
+            string myPassword = Console.ReadLine();
 
-            //// kald login metoden
-            //bool result =Sql.ValidateCredentials(myUsername, myPassword);
+            // kald login metoden
+            bool result = Sql.ValidateCredentials(myUsername, myPassword);
 
-            //// hvis sandt hent user objekt 
-            //if(result)
-            //{
-                CurrentUser = new Users()
-                {
-                    MyUsername = "Bob",
-                    MyPassword = "Bobby123"
-                 };
-                //Sql.GetUserObject(myUsername);
-            //}            
+            // hvis sandt hent user objekt 
+            if (result)
+            {
+                CurrentUser = Sql.GetUserObject(myUsername);
+            }
         }
         // public static void DisableAccount(string accountName)
         // {

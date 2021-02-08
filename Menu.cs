@@ -17,18 +17,37 @@ namespace datingapp
             switch (Console.ReadLine())
             {
                 case "1":
-                    MenuHelpers.Login();
-                    MenuHelpers.PrintCurrentUser();
-                    Console.ReadLine();
+                    while (MenuHelpers.CurrentUser == null)
+                    {
+                        MenuHelpers.Login();
+                        Console.WriteLine("Tast 'exit' for at afbryde login");                        
+                        if (Console.ReadLine()=="exit")
+                        {
+                            break;
+                        }
+                    }
+                    while(MenuHelpers.CurrentUser != null) MainMenu();
                     return true;
                 case "2":
-                    // MenuHelpers.CreateAccount();
+                    MenuHelpers.CreateAccount();
                     return true;
                 case "3":
                     return false;
                 default:
                     return true;
             }
+        }
+        public static bool MainMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("MainMenu");
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1) Liste med matches");
+            Console.WriteLine("2) Aktive samtaler");
+            Console.WriteLine("3) Indstillinger");
+            Console.WriteLine("3) Log ud");
+            Console.WriteLine("3) Afslut");
+            return true;
         }
         // private static bool CreateAccountMenu()
         // {
