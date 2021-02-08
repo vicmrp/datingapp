@@ -1,3 +1,4 @@
+use datingapp;
 SELECT * FROM Users;
 SELECT * FROM PersonInfo;
 SELECT * FROM Addresses;

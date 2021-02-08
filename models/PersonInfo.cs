@@ -19,10 +19,10 @@ namespace datingapp {
                 if (value == "Male" || value == "Female") 
                 {
                     myGender = value;
-                } else 
+                } else
                 {
                     throw new Exception("myGender fejl");
-                }                
+                }             
             }
         }
     }

@@ -36,7 +36,8 @@ MyLastName nvarchar(255) NOT NULL,
 MyAge int NOT NULL,
 MyHeight int NOT NULL,
 MyWeight int NOT NULL,
-MyGender nvarchar(255) CHECK (MyGender='Male' OR MyGender='Female') NOT NULL
+MyGender nvarchar(255) CHECK (MyGender='Male' OR MyGender='Female') NOT NULL,
+CHECK (MyAge >= 15 AND MyAge <= 150),
 )
 GO
 
@@ -66,7 +67,9 @@ CREATE TABLE AttractionTable (
 	MaxHeight int DEFAULT 200,
 	MinWeight int DEFAULT 50,
 	MaxWeight int DEFAULT 100,
-	CHECK (MaxAge >= MinAge AND MinAge >= 15 AND MaxAge <= 65)
+	CHECK (MaxAge >= MinAge AND MinAge >= 15 AND MaxAge <= 150),
+	CHECK (MaxHeight >= MinHeight),
+	CHECK (MaxWeight >= MinWeight)
 )
 GO
 

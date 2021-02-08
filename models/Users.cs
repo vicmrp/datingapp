@@ -5,34 +5,40 @@ namespace datingapp
     public class Users
     {
         public int UsersID { get; set; }    
-           
+        private string myUsername;
         public string MyUsername
         {
-            get => _MyUsername;
+            get { return myUsername; }
             set 
-            {   
-                // Sanitering:
-                // Ikke over 15 karaktere langt
-                // skal være lowercase
-                // skal være en string
+            {
                 if(value.Length>15)
                 {
                     throw new Exception("Username is to long.");
                 } else
                 {   
-                    _MyUsername = ((string)value.ToLower());
+                    myUsername = ((string)value.ToLower());
                 }
             }
         }
         public string MyPassword { get; set; }
-
-        public string Active { get; set; }
-
-
+        private string active;
+        public string Active
+        {
+            get { return active; }
+            set
+            {
+                if (value == "True" || value == "False") 
+                {
+                    active = value;
+                } else 
+                {
+                    throw new Exception("Active fejl");
+                } 
+            }
+        }
         public PersonInfo PersonInfo {get;set;}
         public Addresses Address {get;set;}
         public AttractionTable AttractionTable {get; set;}
-        
-        private string _MyUsername;
+        public ILikeTable ILikeTable { get; set; }
     }
 }

@@ -20,10 +20,13 @@ namespace datingapp
                     while (MenuHelpers.CurrentUser == null)
                     {
                         MenuHelpers.Login();
-                        Console.WriteLine("Tast 'exit' for at afbryde login");                        
-                        if (Console.ReadLine()=="exit")
+                        if (MenuHelpers.CurrentUser == null)
                         {
-                            break;
+                            Console.WriteLine("Tast 'exit' for at afbryde login eller tryk enter for at prøve igen.");
+                            if (Console.ReadLine()=="exit")
+                            {
+                                break;
+                            }
                         }
                     }
                     while(MenuHelpers.CurrentUser != null) MainMenu();
@@ -42,21 +45,23 @@ namespace datingapp
             Console.Clear();
             Console.WriteLine("MainMenu");
             Console.WriteLine("Choose an option:");
-            Console.WriteLine("1) Liste med matches");
-            Console.WriteLine("2) Aktive samtaler");
+            Console.WriteLine("1) Like liste");
+            Console.WriteLine("2) Liste med matches");
             Console.WriteLine("3) Indstillinger");
-            Console.WriteLine("3) Log ud");
-            Console.WriteLine("3) Afslut");
+            Console.WriteLine("4) Log ud");
             switch (Console.ReadLine())
             {
                 case "1":
                     // lav liste med matches
                     return true;
                 case "2":
-
                     return true;
                 case "3":
-                    return false;
+                    return true;
+                case "4":
+                    // slet MenuHelpers.CurrentUser så den bliver erlig null
+                    MenuHelpers.CurrentUser = null;
+                    return true;
                 default:
                     return true;
             }

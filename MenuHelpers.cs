@@ -27,8 +27,15 @@ namespace datingapp {
             PersonInfo.MyHeight = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Indtast din vægt");
             PersonInfo.MyWeight = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Indtast dit køn");
+            Console.WriteLine("Indtast dit køn - Male eller Female");
             PersonInfo.MyGender = Console.ReadLine();
+            // string myGender = "";
+            // while(myGender != "Male" || myGender != "Female")
+            // {
+            //     Console.WriteLine("Indtast dit køn - Male eller Female");
+            //     PersonInfo.MyGender = Console.ReadLine();
+            // }
+            // PersonInfo.MyGender = myGender;
 
             // Table Addresses
             newUser.Address = new Addresses();
