@@ -10,6 +10,10 @@ namespace datingapp
     {
         static void Main(string[] args)
         {
+            /*
+                to do liste
+                name classes til ental. - og dermed også tabellerne.
+            */
             try
             {
                 bool showMenu = true;

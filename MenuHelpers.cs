@@ -56,11 +56,37 @@ namespace datingapp {
             AttractionTable.MaxWeight = Convert.ToInt32(Console.ReadLine());
 
 
-            Sql.Creteaccount (newUser);
+            //Sql.CreateAccount (newUser);
         }
-        public static void DisableAccount(string accountName)
+        public static void PrintCurrentUser()
         {
-            Sql.Equals.DisableAccount()
+            Console.WriteLine($"{CurrentUser.MyUsername}, {CurrentUser.MyPassword}");
         }
+        public static Users CurrentUser { get; set; }
+        public static void Login()
+        {
+            //Console.WriteLine("Udfyld Username.");
+            //var myUsername = Console.ReadLine();
+            //Console.WriteLine("Udfyld Password.");
+            //string myPassword = Console.ReadLine();
+
+            //// kald login metoden
+            //bool result =Sql.ValidateCredentials(myUsername, myPassword);
+
+            //// hvis sandt hent user objekt 
+            //if(result)
+            //{
+                CurrentUser = new Users()
+                {
+                    MyUsername = "Bob",
+                    MyPassword = "Bobby123"
+                 };
+                //Sql.GetUserObject(myUsername);
+            //}            
+        }
+        // public static void DisableAccount(string accountName)
+        // {
+        //     Sql.Equals.DisableAccount()
+        // }
     }  
 }

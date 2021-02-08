@@ -17,13 +17,12 @@ namespace datingapp
             switch (Console.ReadLine())
             {
                 case "1":
-                    // ListClass.TestList();
-                    // LoginFomula();
-                    Console.WriteLine(Sql.SqlConnectionOK());
+                    MenuHelpers.Login();
+                    MenuHelpers.PrintCurrentUser();
                     Console.ReadLine();
                     return true;
                 case "2":
-                    MenuHelpers.CreateAccount();
+                    // MenuHelpers.CreateAccount();
                     return true;
                 case "3":
                     return false;
