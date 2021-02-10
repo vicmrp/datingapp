@@ -36,9 +36,8 @@ namespace datingapp
                 } 
             }
         }
-        public PersonInfo PersonInfo {get;set;}
-        public Addresses Address {get;set;}
-        public AttractionTable AttractionTable {get; set;}
-        public ILikeTable ILikeTable { get; set; }
+        public PersonInfo PersonInfo { get; set; }
+        public Addresses Address { get; set; }
+        public AttractionTable AttractionTable { get; set; }
     }
 }

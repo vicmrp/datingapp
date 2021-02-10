@@ -1,0 +1,8 @@
+Hvordan får en liste med alle dem som jeg matcher med?
+
+IlikeTable skal være den samme tabel kigger i, på et vilkårligt tidspunkt.
+Derfor skal den ikke forbindes med et bruger objekt.
+
+Message table skal være en tabel man kan trække for i 
+
+Jeg behøver ikke at hente andre objekter end 

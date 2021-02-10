@@ -80,7 +80,7 @@ namespace datingapp {
             // kald login metoden
             bool result = Sql.ValidateCredentials(myUsername, myPassword);
 
-            // hvis sandt hent user objekt 
+            // hvis sandt hent user objekt
             if (result)
             {
                 CurrentUser = Sql.GetUserObject(myUsername);

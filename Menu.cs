@@ -45,10 +45,11 @@ namespace datingapp
             Console.Clear();
             Console.WriteLine("MainMenu");
             Console.WriteLine("Choose an option:");
-            Console.WriteLine("1) Like liste");
-            Console.WriteLine("2) Liste med matches");
-            Console.WriteLine("3) Indstillinger");
-            Console.WriteLine("4) Log ud");
+            Console.WriteLine("1) Like list");
+            Console.WriteLine("2) Matches");
+            Console.WriteLine("3) Settings");
+            Console.WriteLine("4) Sign Out");
+            Console.Write("\r\nSelect an option: ");
             switch (Console.ReadLine())
             {
                 case "1":
@@ -57,11 +58,38 @@ namespace datingapp
                 case "2":
                     return true;
                 case "3":
+                    // Delete user
+                    // change your profile
+                    SettingsMenu();
                     return true;
                 case "4":
                     // slet MenuHelpers.CurrentUser så den bliver erlig null
                     MenuHelpers.CurrentUser = null;
                     return true;
+                default:
+                    return true;
+            }
+        }
+        public static bool SettingsMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("SettingsMenu");
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1) Delete User");
+            Console.WriteLine("2) Change your info");
+            Console.WriteLine("3) Change what you like");
+            Console.WriteLine("4) Go back");
+            Console.Write("\r\nSelect an option: ");
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    return true;
+                case "2":
+                    return true;
+                case "3":
+                    return true;
+                case "4":
+                    return false;
                 default:
                     return true;
             }
