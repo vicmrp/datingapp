@@ -54,8 +54,10 @@ namespace datingapp
             {
                 case "1":
                     // lav liste med matches
-                    MenuHelpers.LikeList(); // Indiker at du har liket, og at du ikke kan gøre det igen.
-                    Console.ReadLine();
+                     // Indiker at du har liket, og at du ikke kan gøre det igen.
+                    LikeListMenu();
+                    // System.Console.WriteLine("Du er i MainMenu");
+                    // Console.ReadLine();
                     return true;
                 case "2":
                     return true;
@@ -72,6 +74,22 @@ namespace datingapp
                     return true;
             }
         }
+        public static bool LikeListMenu()
+        {
+            string userInput = "";
+            while (userInput != "exit")
+            {
+                Console.Clear();
+                Console.WriteLine("LikeList");
+                Console.WriteLine("Type exit to exit");
+                Console.WriteLine("Choose who you like:");
+                MenuHelpers.LikeList();
+                userInput = Console.ReadLine();
+            }         
+            return true;
+        }
+        // 1) lea
+        // 1) lea (liked)
         public static bool SettingsMenu()
         {
             Console.Clear();

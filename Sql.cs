@@ -10,22 +10,6 @@ namespace datingapp
     public class Sql
     {
         private static string ConnectionString = @"Data Source=BYG-A101-VICRE\MSSQLSERVER01;Initial Catalog=datingapp;Integrated Security=True";
-        public static bool SqlConnectionOK()
-        {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
-            {
-                try
-                {
-                    con.Open();
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return false;
-                }
-            }
-        }
         public static void CreateAccount(Users insertedObj)
         {
             // Forbindelse
@@ -120,17 +104,48 @@ namespace datingapp
             while (reader.Read())
             {                
                 PersonInfo personInfo = new PersonInfo();
-                // Do some logic here in between.
-                personInfo.MyFirstName = 
+                // Tilføj værdierne fra db til objektet.
+                personInfo.PersonInfoID = reader.GetInt32(0);
+                personInfo.UsersID = reader.GetInt32(1);
+                personInfo.MyFirstName = reader.GetString(2);
+                personInfo.MyLastName = reader.GetString(3);
+                personInfo.MyAge = reader.GetInt32(4);
+                personInfo.MyHeight = reader.GetInt32(5);
+                personInfo.MyWeight = reader.GetInt32(6);
+                personInfo.MyGender = reader.GetString(7);
                 // tilføj person info til din liste
                 listPersonInfo.Add(personInfo);
             }
-
             command.Dispose();
             connection.Close();
             connection.Dispose();
-
             return listPersonInfo;
+        }
+        public static List<ILikeTable> GetWhoILike(int usersID)
+        {
+            List<ILikeTable> listILikeTable = new List<ILikeTable>();
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            SqlCommand command = new SqlCommand($@"       
+                SELECT * FROM ILikeTable
+                WHERE WhoIAmUsersID=@usersID
+            ", connection);
+            command.Parameters.AddWithValue("@usersID", usersID);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {                
+                ILikeTable iLikeTable = new ILikeTable();
+                // Tilføj værdierne fra db til objektet.
+                iLikeTable.ILikeTableID = reader.GetInt32(0);
+                iLikeTable.WhoIAmUsersID = reader.GetInt32(1);
+                iLikeTable.WhoILikeUsersID = reader.GetInt32(2);
+                // tilføj person info til din liste
+                listILikeTable.Add(iLikeTable);
+            }
+            command.Dispose();
+            connection.Close();
+            connection.Dispose();
+            return listILikeTable;
         }
         public static Users GetUserObject(string username)
         {
@@ -191,26 +206,6 @@ namespace datingapp
             connection.Dispose();
 
             return user;
-        }
-        // LoginAccount - SELECT * FROM Users WHERE Username=<username> AND MyPassword=<password> LIMIT 1
-
-
-        // 2a) DataAdapter og DataTable, returnere DataTable
-        public static DataTable ReadTable(string sql)
-        {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
-            {
-                DataTable records = new DataTable();
-
-                //Create new DataAdapter
-                using (SqlDataAdapter a = new SqlDataAdapter(sql, con))
-                {
-                    //Use DataAdapter to fill DataTable records
-                    con.Open();
-                    a.Fill(records);
-                }
-                return records;
-            }
         }
     }
 }

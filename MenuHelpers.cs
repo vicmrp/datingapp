@@ -85,29 +85,36 @@ namespace datingapp {
         // Henter alle dem som du er tiltrukket af.
         public static void LikeList()
         {
-            // Print userID
-            System.Console.WriteLine($"Like liste. CurrentUserID={CurrentUser.UsersID}");
             // Hent liste med dem du er tiltrukket af, udefra CurrentUser.UsersID
             int count = 1;
             List<PersonInfo> listPersonInfo = Sql.GetAllPotientialLikes(CurrentUser.UsersID);
+            List<ILikeTable> listILikeTable = Sql.GetWhoILike(CurrentUser.UsersID);
             listPersonInfo =  listPersonInfo.OrderBy(o=>o.MyFirstName).ToList();
             foreach (PersonInfo personInfo in listPersonInfo)
             {
-                System.Console.WriteLine($"{count} - {personInfo.MyFirstName}, {personInfo.MyLastName}");
+                // // hvis personInfo's usersid er ens med WhoILikeUsersID så er det true
+                // bool doesExist = false;
+                // foreach (ILikeTable like in listILikeTable)
+                // {
+                //     if (like.WhoILikeUsersID==personInfo.UsersID)
+                //     {
+                //         doesExist = true;
+                //         break;
+                //     }
+                // }
+                if (listILikeTable.Any(x=>x.WhoILikeUsersID==personInfo.UsersID))
+                {
+                    System.Console.WriteLine($"{count} - {personInfo.MyFirstName}, {personInfo.MyLastName} [liked allerade]");
+                } 
+                else 
+                {
+                    System.Console.WriteLine($"{count} - {personInfo.MyFirstName}, {personInfo.MyLastName}");
+                }
                 count++;
             }
             // Echo list ud til brugeren. Hvor der er indikeret om bruger allerede har liket dem.
             
 
-            // // Man skal kunne vælge få listen sorteret efter efternavn
-            // List<Kunde> listsKunde3 = Kunde.DanKundeListe();
-            // List<Kunde> SortedList = listsKunde3.OrderBy(o=>o.Navn).ToList();
-            // Console.WriteLine("sorteret liste med kunder: ");
-            // foreach (var item in SortedList)
-            // {
-            //     //System.Console.WriteLine(item.ToString());
-            //     Console.WriteLine($"Navn: {item.Navn}, Telefon: {item.Telefon}, Email: {item.Email}, Kundetype: {item.KundeType}");
-            // }
 
             // Vent på om brugeren 
         }
