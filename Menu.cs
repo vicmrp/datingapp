@@ -54,6 +54,8 @@ namespace datingapp
             {
                 case "1":
                     // lav liste med matches
+                    MenuHelpers.LikeList(); // Indiker at du har liket, og at du ikke kan gøre det igen.
+                    Console.ReadLine();
                     return true;
                 case "2":
                     return true;

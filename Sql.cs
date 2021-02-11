@@ -3,13 +3,13 @@ using System.Data;
 using System.Data.SqlClient;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace datingapp
 {
     public class Sql
     {
         private static string ConnectionString = @"Data Source=BYG-A101-VICRE\MSSQLSERVER01;Initial Catalog=datingapp;Integrated Security=True";
-
         public static bool SqlConnectionOK()
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
@@ -26,8 +26,6 @@ namespace datingapp
                 }
             }
         }
-
-        // 1) Create, Data der skal creates i en tabel (det hedder insert på sql'sk)
         public static void CreateAccount(Users insertedObj)
         {
             // Forbindelse
@@ -91,7 +89,49 @@ namespace datingapp
             if(result==1) return true;
             return false;
         }
+        public static List<PersonInfo> GetAllPotientialLikes(int usersID)
+        {
+            List<PersonInfo> listPersonInfo = new List<PersonInfo>();
 
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            SqlCommand command = new SqlCommand($@"       
+                SELECT 
+                P.PersonInfoID AS PersonInfoID,
+                P.UsersID AS UsersID,
+                P.MyFirstName AS MyFirstName,
+                P.MyLastName AS MyLastName,
+                p.MyAge AS MyAge,
+                p.MyHeight AS MyHeight,
+                p.MyWeight AS MyWeight,
+                p.MyGender AS MyGender
+                --, P.UsersID as PINusersId, P.MyGender, P.MyAge
+                FROM AttractionTable A, PersonInfo P 
+                WHERE 
+                (P.MyWeight>=A.MinWeight AND P.MyWeight<=A.MaxWeight) AND
+                (P.MyAge>=A.MinAge AND P.MyAge<=A.MaxAge) AND
+                (P.MyHeight>=A.MinHeight AND P.MyHeight<=A.MaxHeight) AND
+                (P.MyGender=A.ILikeGender) AND
+                (A.UsersID=@usersID AND P.UsersID <> A.UsersID)
+            ", connection);
+            command.Parameters.AddWithValue("@usersID", usersID);
+            
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {                
+                PersonInfo personInfo = new PersonInfo();
+                // Do some logic here in between.
+                personInfo.MyFirstName = 
+                // tilføj person info til din liste
+                listPersonInfo.Add(personInfo);
+            }
+
+            command.Dispose();
+            connection.Close();
+            connection.Dispose();
+
+            return listPersonInfo;
+        }
         public static Users GetUserObject(string username)
         {
             Users user = new Users();
@@ -152,7 +192,6 @@ namespace datingapp
 
             return user;
         }
-
         // LoginAccount - SELECT * FROM Users WHERE Username=<username> AND MyPassword=<password> LIMIT 1
 
 

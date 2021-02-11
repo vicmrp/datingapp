@@ -77,6 +77,23 @@ ALTER TABLE AttractionTable
 ADD FOREIGN KEY (UsersID) REFERENCES Users(UsersID)
 GO
 
+
+-- # lav en liste af alle dem som du er tiltrukket af
+-- 
+-- der er ingen restriktioner i databasen for hvem der kan like hvem.
+-- Men i applikationen kan du kun se og like dem som du er tiltrukket af.
+-- Hvem du er tiltrukket af ændre sig løbende. F.eks. kan der komme nye bruger til,
+-- en bruger kan have tabt sig (ændret parameter) eller brugeren selv kan ændre sine 
+-- preferencer.
+--
+-- Når du liker bliver noteret i iLikeTable, hvem du er og hvem du har liket.
+-- Du kan kun like en bruger en gang. 
+-- Hvis brugeren har liket dig også så er der match
+
+-- hent like listen
+--
+-- krav en bruger må kun like en bruger som findes.
+-- krav en bruger må ikke kunne like den samme person to gange.
 CREATE TABLE ILikeTable (
 	ILikeTableID int identity(1,1) primary key,
 	WhoIAmUsersID int NOT NULL,
@@ -93,6 +110,9 @@ ALTER TABLE ILikeTable
 ADD FOREIGN KEY (WhoILikeUsersID) REFERENCES Users(UsersID)
 GO
 
+ALTER TABLE ILikeTable
+ADD CONSTRAINT uc_composite UNIQUE (WhoIAmUsersID,WhoILikeUsersID)
+GO
 
 CREATE TABLE MessageTable (
 	MessageTableID int identity(1,1) primary key,
@@ -114,7 +134,7 @@ GO
 -- insert dummy data
 INSERT INTO Users VALUES 
 ('gillelejeBoy', 'Password123', 'True'),
-('vicmrp', 'Password123', 'True'),
+('vicmrp', '1234', 'True'),
 ('flyelsker', 'Password123', 'True'),
 ('leaGirl', '1234', 'True'),
 ('louiseGirl', '1234', 'True'),
@@ -144,7 +164,7 @@ GO
 INSERT INTO AttractionTable VALUES
 -- UsersID Gender MinAge MaxAge MinHeight MaxHeight MinWeight MaxWeight
 (1, 'Female', 20, 35, 170, 192, 50, 75 ),
-(2, 'Female', 22, 24, 160, 190, 50, 75 ),
+(2, 'Female', 20, 30, 150, 200, 50, 75 ),
 (3, 'Female', 15, 16, 160, 190, 40, 120),
 (4, 'Male', 30, 50, 180, 200, 80, 95),
 (5, 'Male', 30, 50, 180, 200, 80, 95),

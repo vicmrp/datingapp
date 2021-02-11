@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace datingapp {
     public static class MenuHelpers {
@@ -29,13 +31,6 @@ namespace datingapp {
             PersonInfo.MyWeight = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Indtast dit køn - Male eller Female");
             PersonInfo.MyGender = Console.ReadLine();
-            // string myGender = "";
-            // while(myGender != "Male" || myGender != "Female")
-            // {
-            //     Console.WriteLine("Indtast dit køn - Male eller Female");
-            //     PersonInfo.MyGender = Console.ReadLine();
-            // }
-            // PersonInfo.MyGender = myGender;
 
             // Table Addresses
             newUser.Address = new Addresses();
@@ -85,6 +80,36 @@ namespace datingapp {
             {
                 CurrentUser = Sql.GetUserObject(myUsername);
             }
+        }
+        
+        // Henter alle dem som du er tiltrukket af.
+        public static void LikeList()
+        {
+            // Print userID
+            System.Console.WriteLine($"Like liste. CurrentUserID={CurrentUser.UsersID}");
+            // Hent liste med dem du er tiltrukket af, udefra CurrentUser.UsersID
+            int count = 1;
+            List<PersonInfo> listPersonInfo = Sql.GetAllPotientialLikes(CurrentUser.UsersID);
+            listPersonInfo =  listPersonInfo.OrderBy(o=>o.MyFirstName).ToList();
+            foreach (PersonInfo personInfo in listPersonInfo)
+            {
+                System.Console.WriteLine($"{count} - {personInfo.MyFirstName}, {personInfo.MyLastName}");
+                count++;
+            }
+            // Echo list ud til brugeren. Hvor der er indikeret om bruger allerede har liket dem.
+            
+
+            // // Man skal kunne vælge få listen sorteret efter efternavn
+            // List<Kunde> listsKunde3 = Kunde.DanKundeListe();
+            // List<Kunde> SortedList = listsKunde3.OrderBy(o=>o.Navn).ToList();
+            // Console.WriteLine("sorteret liste med kunder: ");
+            // foreach (var item in SortedList)
+            // {
+            //     //System.Console.WriteLine(item.ToString());
+            //     Console.WriteLine($"Navn: {item.Navn}, Telefon: {item.Telefon}, Email: {item.Email}, Kundetype: {item.KundeType}");
+            // }
+
+            // Vent på om brugeren 
         }
         // public static void DisableAccount(string accountName)
         // {
