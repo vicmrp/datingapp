@@ -70,7 +70,7 @@ namespace datingapp
             connection.Close();
             connection.Dispose();
 
-            if(result==1) return true;
+            if (result == 1) return true;
             return false;
         }
         public static List<PersonInfo> GetAllPotientialLikes(int usersID)
@@ -99,10 +99,10 @@ namespace datingapp
                 (A.UsersID=@usersID AND P.UsersID <> A.UsersID)
             ", connection);
             command.Parameters.AddWithValue("@usersID", usersID);
-            
+
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
-            {                
+            {
                 PersonInfo personInfo = new PersonInfo();
                 // Tilføj værdierne fra db til objektet.
                 personInfo.PersonInfoID = reader.GetInt32(0);
@@ -133,7 +133,7 @@ namespace datingapp
             command.Parameters.AddWithValue("@usersID", usersID);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
-            {                
+            {
                 ILikeTable iLikeTable = new ILikeTable();
                 // Tilføj værdierne fra db til objektet.
                 iLikeTable.ILikeTableID = reader.GetInt32(0);
@@ -161,10 +161,10 @@ namespace datingapp
                 WHERE Users.MyUsername = @username
             ", connection);
             command.Parameters.AddWithValue("@username", username);
-            
+
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
-            {                
+            {
                 // table Users
                 user.UsersID = reader.GetInt32(0);
                 user.MyUsername = reader.GetString(1);
@@ -237,6 +237,72 @@ namespace datingapp
 
             if (result == 1) return true;
             return false;
+        }
+
+        public static List<PersonInfo> GetMatches(int whoIAmUsersID)
+        {
+            List<PersonInfo> matches = new List<PersonInfo>();
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            SqlCommand command = new SqlCommand(
+            $@"
+            SELECT ILikeTable2.WhoILikeUsersID AS WhoILikeUsersID,
+            (
+                SELECT COUNT(WhoILikeUsersID)
+                FROM
+                ILikeTable AS ILikeTable1 
+                WHERE
+                ILikeTable1.WhoIAmUsersID = ILikeTable2.WhoILikeUsersID AND ILikeTable1.WhoILikeUsersID = ILikeTable2.WhoIAmUsersID
+            ) AS
+            [Match] FROM 
+            ILikeTable AS ILikeTable2 WHERE WhoIAmUsersID = @whoIAmUsersID
+            ", connection);
+            command.Parameters.AddWithValue("@whoIAmUsersID", whoIAmUsersID);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                //Check if user i like likes me back.
+                if (reader.GetInt32(1) == 1)
+                {
+                    // Add user to list by id.
+                    matches.Add(GetPersonInfoById(reader.GetInt32(0)));
+                }
+            }
+            command.Dispose();
+            connection.Close();
+            connection.Dispose();
+            return matches;
+        }
+        public static PersonInfo GetPersonInfoById(int userID)
+        {
+            PersonInfo personInfo = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            SqlCommand command = new SqlCommand(
+            $@"
+                SELECT * FROM PersonInfo WHERE UsersID = @userID
+            ",
+            connection);
+            command.Parameters.AddWithValue("@userID", userID);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                personInfo = new PersonInfo()
+                {
+                    PersonInfoID = reader.GetInt32(0),
+                    UsersID = reader.GetInt32(1),
+                    MyFirstName = reader.GetString(2),
+                    MyLastName = reader.GetString(3),
+                    MyAge = reader.GetInt32(4),
+                    MyHeight = reader.GetInt32(5),
+                    MyWeight = reader.GetInt32(6),
+                    MyGender = reader.GetString(7)
+                };
+            }
+            command.Dispose();
+            connection.Close();
+            connection.Dispose();
+            return personInfo;
         }
     }
 }

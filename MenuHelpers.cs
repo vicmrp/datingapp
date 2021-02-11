@@ -81,7 +81,6 @@ namespace datingapp {
                 CurrentUser = Sql.GetUserObject(myUsername);
             }
         }
-        
         // Henter alle dem som du er tiltrukket af.
         public static void RefreshLikeList(string userInput)
         {
@@ -124,9 +123,34 @@ namespace datingapp {
 
             // Vent på om brugeren 
         }
-        // public static void DisableAccount(string accountName)
-        // {
-        //     Sql.Equals.DisableAccount()
-        // }
-    }  
+        public static void RefreshMatchList(string userInput)
+        {
+            int count = 1;
+            // Henter en liste af objekter af typen PersonInfo
+            List<PersonInfo> listMatches = Sql.GetMatches(CurrentUser.UsersID);
+            listMatches =  listMatches.OrderBy(o=>o.MyFirstName).ToList();
+
+            
+            int.TryParse(userInput, out int myChoice);
+            if (myChoice>=1 && myChoice<= listMatches.Count())
+            {
+                //Get chat or start chat with person by choice
+                if (!Sql.CheckIfAlreadyLiked(CurrentUser.UsersID, listPersonInfo[myChoice-1].UsersID))
+                {
+                    Sql.SetWhoILike(CurrentUser.UsersID, listPersonInfo[myChoice-1].UsersID);
+                }
+            }
+
+            foreach (PersonInfo match in listMatches)
+            {
+                System.Console.WriteLine($"{count++} - {match.MyFirstName}, {match.MyLastName}");
+            }
+
+            // Først skal listen genreres. Man skal hente data fra PersonInfo tabellen.
+            // Baseret ens usersID, som skal optræde 
+
+            // Jeg vil have en liste med alle dem som jeg matcher med.
+            // Det vil sige alle dem som jeg selv har liked, og som har liket mig.
+        }
+    }
 }
