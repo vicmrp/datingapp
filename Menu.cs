@@ -60,6 +60,9 @@ namespace datingapp
                     // Console.ReadLine();
                     return true;
                 case "2":
+                    // Få liste med dem som du matcher med, det vil sige at dem du har liked 
+                    // og som har liked dig.
+
                     return true;
                 case "3":
                     // Delete user
@@ -83,8 +86,38 @@ namespace datingapp
                 Console.WriteLine("LikeList");
                 Console.WriteLine("Type exit to exit");
                 Console.WriteLine("Choose who you like:");
-                MenuHelpers.LikeList();
+
+                // skaber liste
+                MenuHelpers.RefreshLikeList(userInput);
+                // lytter til input
                 userInput = Console.ReadLine();
+                // håndtere input
+                // må ikke like en som man allerede har liked
+                // skal tal/inputs ignoreres medmindre at det er 'exit' eller
+                // et tal som er på listen af personer.
+                // MenuHelpers.
+            }         
+            return true;
+        }
+        public static bool MatchMenu()
+        {
+            string userInput = "";
+            while (userInput != "exit")
+            {
+                Console.Clear();
+                Console.WriteLine("MatchMenu");
+                Console.WriteLine("Type exit to exit");
+                Console.WriteLine("Choose who your message partner:");
+
+                // skaber liste
+                MenuHelpers.RefreshLikeList(userInput);
+                // lytter til input
+                userInput = Console.ReadLine();
+                // håndtere input
+                // må ikke like en som man allerede har liked
+                // skal tal/inputs ignoreres medmindre at det er 'exit' eller
+                // et tal som er på listen af personer.
+                // MenuHelpers.
             }         
             return true;
         }

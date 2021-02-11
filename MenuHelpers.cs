@@ -83,13 +83,21 @@ namespace datingapp {
         }
         
         // Henter alle dem som du er tiltrukket af.
-        public static void LikeList()
+        public static void RefreshLikeList(string userInput)
         {
             // Hent liste med dem du er tiltrukket af, udefra CurrentUser.UsersID
             int count = 1;
             List<PersonInfo> listPersonInfo = Sql.GetAllPotientialLikes(CurrentUser.UsersID);
-            List<ILikeTable> listILikeTable = Sql.GetWhoILike(CurrentUser.UsersID);
             listPersonInfo =  listPersonInfo.OrderBy(o=>o.MyFirstName).ToList();
+            int.TryParse(userInput, out int myChoice);
+            if (myChoice>=1 && myChoice<= listPersonInfo.Count())
+            {
+                if (!Sql.CheckIfAlreadyLiked(CurrentUser.UsersID, listPersonInfo[myChoice-1].UsersID))
+                {
+                    Sql.SetWhoILike(CurrentUser.UsersID, listPersonInfo[myChoice-1].UsersID);
+                }
+            }
+            List<ILikeTable> listILikeTable = Sql.GetWhoILike(CurrentUser.UsersID);
             foreach (PersonInfo personInfo in listPersonInfo)
             {
                 // // hvis personInfo's usersid er ens med WhoILikeUsersID så er det true
@@ -113,8 +121,6 @@ namespace datingapp {
                 count++;
             }
             // Echo list ud til brugeren. Hvor der er indikeret om bruger allerede har liket dem.
-            
-
 
             // Vent på om brugeren 
         }

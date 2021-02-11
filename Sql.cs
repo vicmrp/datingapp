@@ -207,5 +207,36 @@ namespace datingapp
 
             return user;
         }
+
+        public static bool SetWhoILike(int whoIAmUsersID, int whoILikeUsersID)
+        {
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            SqlCommand command = new SqlCommand($"INSERT INTO ILikeTable (WhoIAmUsersID,WhoILikeUsersID) VALUES (@whoIAmUsersID, @whoILikeUsersID)", connection);
+            command.Parameters.AddWithValue("@whoIAmUsersID", whoIAmUsersID);
+            command.Parameters.AddWithValue("@whoILikeUsersID", whoILikeUsersID);
+            int result = Convert.ToInt32(command.ExecuteScalar());
+            command.Dispose();
+            connection.Close();
+            connection.Dispose();
+
+            if (result == 1) return true;
+            return false;
+        }
+        public static bool CheckIfAlreadyLiked(int whoIAmUsersID, int whoILikeUsersID)
+        {
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            SqlCommand command = new SqlCommand($"SELECT COUNT(*) FROM ILikeTable WHERE WhoIAmUsersID=@whoIAmUsersID AND WhoILikeUsersID=@whoILikeUsersID", connection);
+            command.Parameters.AddWithValue("@whoIAmUsersID", whoIAmUsersID);
+            command.Parameters.AddWithValue("@whoILikeUsersID", whoILikeUsersID);
+            int result = Convert.ToInt32(command.ExecuteScalar());
+            command.Dispose();
+            connection.Close();
+            connection.Dispose();
+
+            if (result == 1) return true;
+            return false;
+        }
     }
 }
