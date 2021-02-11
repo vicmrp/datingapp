@@ -304,5 +304,18 @@ namespace datingapp
             connection.Dispose();
             return personInfo;
         }
+        public static List<MessageTable> GetAllMessages(int senderUsersID, int recipientUsersID)
+        {
+            List<MessageTable> chatHistory = new List<MessageTable>();
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            SqlCommand command = new SqlCommand(
+            $@"
+                SELECT * FROM MessageTable WHERE 
+                (SenderUsersID=@recipientUsersID AND RecipientUsersID=@senderUsersID) OR
+                (SenderUsersID=@senderUsersID AND RecipientUsersID=@recipientUsersID)
+            ",
+            connection);
+        }
     }
 }

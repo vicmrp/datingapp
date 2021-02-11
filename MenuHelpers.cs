@@ -99,6 +99,7 @@ namespace datingapp {
             List<ILikeTable> listILikeTable = Sql.GetWhoILike(CurrentUser.UsersID);
             foreach (PersonInfo personInfo in listPersonInfo)
             {
+                // NOTATION 1
                 // // hvis personInfo's usersid er ens med WhoILikeUsersID så er det true
                 // bool doesExist = false;
                 // foreach (ILikeTable like in listILikeTable)
@@ -109,6 +110,8 @@ namespace datingapp {
                 //         break;
                 //     }
                 // }
+        
+                // NOTATION 2
                 if (listILikeTable.Any(x=>x.WhoILikeUsersID==personInfo.UsersID))
                 {
                     System.Console.WriteLine($"{count} - {personInfo.MyFirstName}, {personInfo.MyLastName} [liked allerade]");
@@ -134,11 +137,8 @@ namespace datingapp {
             int.TryParse(userInput, out int myChoice);
             if (myChoice>=1 && myChoice<= listMatches.Count())
             {
-                //Get chat or start chat with person by choice
-                if (!Sql.CheckIfAlreadyLiked(CurrentUser.UsersID, listPersonInfo[myChoice-1].UsersID))
-                {
-                    Sql.SetWhoILike(CurrentUser.UsersID, listPersonInfo[myChoice-1].UsersID);
-                }
+                // listPersonInfo[myChoice-1]
+                Chat(listMatches[myChoice]);
             }
 
             foreach (PersonInfo match in listMatches)
@@ -151,6 +151,22 @@ namespace datingapp {
 
             // Jeg vil have en liste med alle dem som jeg matcher med.
             // Det vil sige alle dem som jeg selv har liked, og som har liket mig.
+        }
+        public static void Chat(PersonInfo personToMessage)
+        {
+            string userInput = "";
+            while (userInput != "@exit")
+            {
+                Console.Clear();
+                // get chat
+                List<MessageTable> Messages = Sql.GetAllMessages(CurrentUser.UsersID, personToMessage.UsersID);
+                int count =  1;
+                foreach (MessageTable message in Messages)
+                {
+                    Console.WriteLine($"{count++}. {message.SenderUsersID}: {message.MyMessage}");
+                }
+                userInput = Console.ReadLine();
+            }
         }
     }
 }
