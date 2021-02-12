@@ -137,8 +137,7 @@ namespace datingapp {
             int.TryParse(userInput, out int myChoice);
             if (myChoice>=1 && myChoice<= listMatches.Count())
             {
-                // listPersonInfo[myChoice-1]
-                Chat(listMatches[myChoice]);
+                Chat(listMatches[myChoice-1]);
             }
 
             foreach (PersonInfo match in listMatches)
@@ -158,12 +157,20 @@ namespace datingapp {
             while (userInput != "@exit")
             {
                 Console.Clear();
+                Console.WriteLine("MatchMenu");
+                Console.WriteLine("Type @exit to exit");
+                Console.WriteLine($"Chatting with {personToMessage.MyFirstName} {personToMessage.MyLastName}:");
+                List<PersonInfo> listUsersInRoom = new List<PersonInfo>() 
+                { 
+                    CurrentUser.PersonInfo, 
+                    personToMessage
+                };
+
                 // get chat
                 List<MessageTable> Messages = Sql.GetAllMessages(CurrentUser.UsersID, personToMessage.UsersID);
-                int count =  1;
                 foreach (MessageTable message in Messages)
                 {
-                    Console.WriteLine($"{count++}. {message.SenderUsersID}: {message.MyMessage}");
+                    Console.WriteLine($"{listUsersInRoom.FirstOrDefault(e=>e.UsersID == message.SenderUsersID).MyFirstName}: {message.MyMessage}");
                 }
                 userInput = Console.ReadLine();
             }

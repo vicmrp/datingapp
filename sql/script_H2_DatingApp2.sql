@@ -184,4 +184,7 @@ INSERT INTO MessageTable VALUES
 (1,2,'Hej vicmrp, gaar det godt? Hilsen gillelejeboy'),
 (1,4, 'Hej Leagirl. Hilsen Gillejeboy.'),
 (2,1, 'Hej gillelejeeboy hilsen vicmrp')
+-- vicmrp skriver til leaGirl
+(2,4, 'Hej leaGirl. Hilsen vicmrp'),
+(4,2, 'Hej vicmrp. Hilsen leaGirl')
 GO

@@ -316,6 +316,33 @@ namespace datingapp
                 (SenderUsersID=@senderUsersID AND RecipientUsersID=@recipientUsersID)
             ",
             connection);
+            command.Parameters.AddWithValue("@senderUsersID", senderUsersID);
+            command.Parameters.AddWithValue("@recipientUsersID", recipientUsersID);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                // Notation 1
+                // MessageTable messageTable = new MessageTable();
+                // // Tilføj værdierne fra db til objektet.
+                // messageTable.MessageTableID = reader.GetInt32(0);
+                // messageTable.SenderUsersID = reader.GetInt32(1);
+                // messageTable.RecipientUsersID = reader.GetInt32(2);
+                // messageTable.MyMessage = reader.GetString(3);
+                // chatHistory.Add(messageTable);
+
+                // Notation 2
+                chatHistory.Add(new MessageTable() 
+                {
+                    MessageTableID = reader.GetInt32(0),
+                    SenderUsersID = reader.GetInt32(1),
+                    RecipientUsersID = reader.GetInt32(2),
+                    MyMessage = reader.GetString(3)
+            });
+            }
+            command.Dispose();
+            connection.Close();
+            connection.Dispose();
+            return chatHistory;
         }
     }
 }

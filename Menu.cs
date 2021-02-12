@@ -22,8 +22,8 @@ namespace datingapp
                         MenuHelpers.Login();
                         if (MenuHelpers.CurrentUser == null)
                         {
-                            Console.WriteLine("Tast 'exit' for at afbryde login eller tryk enter for at prøve igen.");
-                            if (Console.ReadLine()=="exit")
+                            Console.WriteLine("Tast '@exit' for at afbryde login eller tryk enter for at prøve igen.");
+                            if (Console.ReadLine()=="@exit")
                             {
                                 break;
                             }
@@ -80,11 +80,11 @@ namespace datingapp
         public static bool LikeListMenu()
         {
             string userInput = "";
-            while (userInput != "exit")
+            while (userInput != "@exit")
             {
                 Console.Clear();
                 Console.WriteLine("LikeList");
-                Console.WriteLine("Type exit to exit");
+                Console.WriteLine("Type @exit to exit");
                 Console.WriteLine("Choose who you like:");
 
                 // skaber liste
@@ -97,11 +97,11 @@ namespace datingapp
         public static bool MatchMenu()
         {
             string userInput = "";
-            while (userInput != "exit")
+            while (userInput != "@exit")
             {
                 Console.Clear();
                 Console.WriteLine("MatchMenu");
-                Console.WriteLine("Type exit to exit");
+                Console.WriteLine("Type @exit to exit");
                 Console.WriteLine("Choose who your message partner:");
 
                 // skaber liste
