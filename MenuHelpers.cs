@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace datingapp {
-    public static class MenuHelpers {
+namespace datingapp
+{
+    public static class MenuHelpers
+    {
         public static Users CurrentUser { get; set; }
         // Metode
         public static void CreateAccount()
@@ -36,7 +38,7 @@ namespace datingapp {
             newUser.Address = new Addresses();
             Addresses Address = newUser.Address;
             Console.WriteLine("Indtast by");
-            Address.MyCity = Console.ReadLine(); 
+            Address.MyCity = Console.ReadLine();
             Console.WriteLine("Indtast postnummer");
             Address.MyZipCode = Console.ReadLine();
 
@@ -59,7 +61,7 @@ namespace datingapp {
             AttractionTable.MaxWeight = Convert.ToInt32(Console.ReadLine());
 
 
-            Sql.CreateAccount (newUser);
+            Sql.CreateAccount(newUser);
         }
         public static void PrintCurrentUser()
         {
@@ -87,13 +89,13 @@ namespace datingapp {
             // Hent liste med dem du er tiltrukket af, udefra CurrentUser.UsersID
             int count = 1;
             List<PersonInfo> listPersonInfo = Sql.GetAllPotientialLikes(CurrentUser.UsersID);
-            listPersonInfo =  listPersonInfo.OrderBy(o=>o.MyFirstName).ToList();
+            listPersonInfo = listPersonInfo.OrderBy(o => o.MyFirstName).ToList();
             int.TryParse(userInput, out int myChoice);
-            if (myChoice>=1 && myChoice<= listPersonInfo.Count())
+            if (myChoice >= 1 && myChoice <= listPersonInfo.Count())
             {
-                if (!Sql.CheckIfAlreadyLiked(CurrentUser.UsersID, listPersonInfo[myChoice-1].UsersID))
+                if (!Sql.CheckIfAlreadyLiked(CurrentUser.UsersID, listPersonInfo[myChoice - 1].UsersID))
                 {
-                    Sql.SetWhoILike(CurrentUser.UsersID, listPersonInfo[myChoice-1].UsersID);
+                    Sql.SetWhoILike(CurrentUser.UsersID, listPersonInfo[myChoice - 1].UsersID);
                 }
             }
             List<ILikeTable> listILikeTable = Sql.GetWhoILike(CurrentUser.UsersID);
@@ -110,13 +112,13 @@ namespace datingapp {
                 //         break;
                 //     }
                 // }
-        
+
                 // NOTATION 2
-                if (listILikeTable.Any(x=>x.WhoILikeUsersID==personInfo.UsersID))
+                if (listILikeTable.Any(x => x.WhoILikeUsersID == personInfo.UsersID))
                 {
                     System.Console.WriteLine($"{count} - {personInfo.MyFirstName}, {personInfo.MyLastName} [liked allerade]");
-                } 
-                else 
+                }
+                else
                 {
                     System.Console.WriteLine($"{count} - {personInfo.MyFirstName}, {personInfo.MyLastName}");
                 }
@@ -131,18 +133,20 @@ namespace datingapp {
             int count = 1;
             // Henter en liste af objekter af typen PersonInfo
             List<PersonInfo> listMatches = Sql.GetMatches(CurrentUser.UsersID);
-            listMatches =  listMatches.OrderBy(o=>o.MyFirstName).ToList();
+            listMatches = listMatches.OrderBy(o => o.MyFirstName).ToList();
 
-            
+
             int.TryParse(userInput, out int myChoice);
-            if (myChoice>=1 && myChoice<= listMatches.Count())
+            if (myChoice >= 1 && myChoice <= listMatches.Count())
             {
-                Chat(listMatches[myChoice-1]);
+                Chat(listMatches[myChoice - 1]);
             }
-
-            foreach (PersonInfo match in listMatches)
+            else
             {
-                System.Console.WriteLine($"{count++} - {match.MyFirstName}, {match.MyLastName}");
+                foreach (PersonInfo match in listMatches)
+                {
+                    System.Console.WriteLine($"{count++} - {match.MyFirstName}, {match.MyLastName}");
+                }
             }
 
             // Først skal listen genreres. Man skal hente data fra PersonInfo tabellen.
@@ -157,21 +161,21 @@ namespace datingapp {
             while (userInput != "@exit")
             {
                 Console.Clear();
-                Console.WriteLine("MatchMenu");
-                Console.WriteLine("Type @exit to exit");
+                Console.WriteLine("Chatroom");
+                Console.WriteLine("Type @exit and press enter to exit");
                 Console.WriteLine($"Chatting with {personToMessage.MyFirstName} {personToMessage.MyLastName}:");
-                List<PersonInfo> listUsersInRoom = new List<PersonInfo>() 
-                { 
-                    CurrentUser.PersonInfo, 
+                List<PersonInfo> listUsersInRoom = new List<PersonInfo>()
+                {
+                    CurrentUser.PersonInfo,
                     personToMessage
                 };
                 // get chat
                 List<MessageTable> Messages = Sql.GetAllMessages(CurrentUser.UsersID, personToMessage.UsersID);
                 foreach (MessageTable message in Messages)
                 {
-                    Console.WriteLine($"{listUsersInRoom.FirstOrDefault(e=>e.UsersID == message.SenderUsersID).MyFirstName}: {message.MyMessage}");
+                    Console.WriteLine($"{listUsersInRoom.FirstOrDefault(e => e.UsersID == message.SenderUsersID).MyFirstName}: {message.MyMessage}");
                 }
-                
+
                 userInput = Console.ReadLine();
                 MessageTable newMessage = new MessageTable()
                 {
