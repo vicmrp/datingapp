@@ -165,14 +165,23 @@ namespace datingapp {
                     CurrentUser.PersonInfo, 
                     personToMessage
                 };
-
                 // get chat
                 List<MessageTable> Messages = Sql.GetAllMessages(CurrentUser.UsersID, personToMessage.UsersID);
                 foreach (MessageTable message in Messages)
                 {
                     Console.WriteLine($"{listUsersInRoom.FirstOrDefault(e=>e.UsersID == message.SenderUsersID).MyFirstName}: {message.MyMessage}");
                 }
+                
                 userInput = Console.ReadLine();
+                MessageTable newMessage = new MessageTable()
+                {
+                    SenderUsersID = CurrentUser.UsersID,
+                    RecipientUsersID = personToMessage.UsersID,
+                    MyMessage = userInput
+                };
+
+                if (userInput != "@exit") Sql.SetMessage(newMessage);
+
             }
         }
     }

@@ -344,5 +344,27 @@ namespace datingapp
             connection.Dispose();
             return chatHistory;
         }
+        public static bool SetMessage(MessageTable message)
+        {
+            // Indsæt besked i MessageTable 
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(
+            $@"
+            INSERT INTO MessageTable VALUES
+            (@senderUsersID, @recipientUsersID, @myMessage)
+            ", connection);
+            command.Parameters.AddWithValue("@senderUsersID", message.SenderUsersID);
+            command.Parameters.AddWithValue("@recipientUsersID", message.RecipientUsersID);
+            command.Parameters.AddWithValue("@myMessage", message.MyMessage);
+            int result = Convert.ToInt32(command.ExecuteScalar());
+            command.Dispose();
+            connection.Close();
+            connection.Dispose();
+
+            if (result == 1) return true;
+            return false;
+        }
     }
 }
